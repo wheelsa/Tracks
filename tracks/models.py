@@ -9,4 +9,13 @@ class Track(models.Model):
     description = models.TextField(blank=True)
     url = models.URLField()
     created_at = models.DateTimeField(auto_now_add=True)
-    posted_by = models.ForeignKey(get_user_model(), null=True, on_delete=models.CASCADE) # models cascade means if user deleted, tracks associated will be deleted too
+    # models cascade means if user deleted, tracks associated will be deleted too
+    posted_by = models.ForeignKey(
+        get_user_model(), null=True, on_delete=models.CASCADE)
+
+
+class Like(models.Model):
+    user = models.ForeignKey(
+        get_user_model(), null=True, on_delete=models.CASCADE)
+    track = models.ForeignKey(
+        'tracks.Track', related_name='likes', on_delete=models.CASCADE)
